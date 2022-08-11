@@ -59,7 +59,7 @@ namespace CRM_Publisher_V2
                     string param2_username = form.Email;
                     string param3_password = form.Password;
 
-                    MessageBox.Show(param2_username.Substring(param2_username.Length - 16, 16));
+                    
 
                     string param4_entity = "";
                     string param5_field = "";
@@ -124,7 +124,12 @@ namespace CRM_Publisher_V2
                                     MessageBox.Show("Please check \"" + Field + "\" Value !");
                                     
                                     goto End;
-                                };
+                                }
+                                else if(FieldValue < 0 || FieldValue > 100)
+                                {
+                                    MessageBox.Show("The value of \"" + Field + "\" is out of range!");
+                                    goto End;
+                                }
                                 break;
                             case "MR Balance at Ext. 1 ($)":
                                 if (FieldValue.GetType().Name != "Double")
@@ -132,6 +137,7 @@ namespace CRM_Publisher_V2
                                     MessageBox.Show("Please check \"" + Field + "\" Value !");
                                     
                                     goto End;
+                                    
                                 };
                                 break;
                             case "Enable on FF":
