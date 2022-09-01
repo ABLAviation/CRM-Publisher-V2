@@ -115,19 +115,20 @@ namespace CRM_Publisher_V2
                         var FieldValue = Params[i, 2].Value2;
                         var Field = Params[i, 1].Value2;
 
-                        // MessageBox.Show(DataType.GetType().Name+" -------- "+Field);
+                        //MessageBox.Show(FieldValue.GetType().Name+" -------- "+Field);
                         switch (Field)
                         {
                             case "Life at Ext. 1 (%)":
                                 if (FieldValue.GetType().Name != "Double")
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" Value !");
-                                    
+                                    //MessageBox.Show("1");
                                     goto End;
                                 }
                                 else if(FieldValue < 0 || FieldValue > 100)
                                 {
                                     MessageBox.Show("The value of \"" + Field + "\" is out of range!");
+                                    //MessageBox.Show("2");
                                     goto End;
                                 }
                                 break;
@@ -135,15 +136,22 @@ namespace CRM_Publisher_V2
                                 if (FieldValue.GetType().Name != "Double")
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" Value !");
-                                    
+                                    //MessageBox.Show("3");
+
                                     goto End;
                                     
                                 };
                                 break;
                             case "Enable on FF":
-                                if (FieldValue.ToUpper() != "NO" && FieldValue.ToUpper() != "YES")
+                                if (FieldValue.GetType().Name != "String") 
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" Value !");
+                                    goto End;
+                                }
+                                else if ((FieldValue.ToUpper() != "NO" && FieldValue.ToUpper() != "YES") )
+                                {
+                                    MessageBox.Show("Please check \"" + Field + "\" Value !");
+                                    //MessageBox.Show("4");
                                     goto End;
                                 };
                                 break;
@@ -151,7 +159,7 @@ namespace CRM_Publisher_V2
                                 if (FieldValue.GetType().Name != "String")
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" Value !");
-                                    
+                                    //MessageBox.Show("5");
                                     goto End;
                                 };
                                 break;
@@ -159,7 +167,7 @@ namespace CRM_Publisher_V2
                                 if (FieldValue.GetType().Name != "String")
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" Value !");
-                                    
+                                    //MessageBox.Show("6");
                                     goto End;
                                 };
                                 break;
@@ -167,7 +175,7 @@ namespace CRM_Publisher_V2
                                 if (FieldValue.GetType().Name != "String")
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" Value !");
-                                    
+                                    //MessageBox.Show("7");
                                     goto End;
                                 };
                                 break;
@@ -183,7 +191,7 @@ namespace CRM_Publisher_V2
                     //string ParamsVal = Params.Value2;
                     Range URLRng = (Range)ws.Application.get_Range("CRM_URL");
                     string param1_url = URLRng.Value2;
-
+                    
                     String ParamList;
                     List<string> ParamListArray = new List<string>();
                     foreach (Range row in Params.Rows)
@@ -211,6 +219,11 @@ namespace CRM_Publisher_V2
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                     var servicedynamic = new CrmServiceClient(connectionstring_dynamic);
 
+                    if (servicedynamic.IsReady.ToString() == "False")
+                    {
+                        goto End;
+                    }
+
                     WhoAmIRequest systemUserRequest = new WhoAmIRequest();
                     WhoAmIResponse systemUserResponse = (WhoAmIResponse)servicedynamic.Execute(systemUserRequest);
                     Guid userId = systemUserResponse.UserId;
@@ -219,7 +232,7 @@ namespace CRM_Publisher_V2
                     var User = servicedynamic.Retrieve("systemuser", userId, new ColumnSet("fullname"));
                     string fullName = User["fullname"].ToString();
 
-                    
+
 
                     /*//Informing the User whether the connection is successful
                     if (servicedynamic.IsReady)
@@ -227,7 +240,7 @@ namespace CRM_Publisher_V2
                        //MessageBox.Show("Connection succeeded !");
                     
                     }*/
-
+                    
                     // Splitting the Params string from Excel (Parameters sheet) and storing their values in the previously declared variables
                     //string[] OutputsParams = ParamsVal.Split(new[] { "||" }, StringSplitOptions.None);
                     //MessageBox.Show(OutputsParams[0]);
@@ -262,7 +275,7 @@ namespace CRM_Publisher_V2
                         }
                         //Retrieving the Org Name
                         string orgname = servicedynamic.ConnectedOrgUniqueName;
-                    
+                        
                         //Calling the method updating the record
                         if (orgname != "" && orgname != null)
                         {
@@ -272,7 +285,7 @@ namespace CRM_Publisher_V2
 
                             ws.get_Range("Updated_On").Value2 = System.DateTime.Now.ToString("yyyy'/'MM'/'dd'  'HH':'mm':'ss");
                             ws.get_Range("Updated_By").Value2 = fullName;
-
+                            //MessageBox.Show("here " + ParamListArray[j]);
                         }
                         else
                         {
@@ -290,6 +303,10 @@ namespace CRM_Publisher_V2
                     if (string.IsNullOrEmpty(param2_username) || string.IsNullOrEmpty(param3_password))
                     {
                         MessageBox.Show("Operation Canceled !");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please check your credentials !");
                     }
                 }
 
@@ -444,7 +461,7 @@ namespace CRM_Publisher_V2
                               select new { Value = o.Value, Text = o.Label.UserLocalizedLabel.Label }).ToList();
 
 
-            var activeValue = optionList.Where(o => o.Text == fieldvalue)
+            var activeValue = optionList.Where(o => o.Text.ToUpper() == fieldvalue.ToUpper())
                                     .Select(o => o.Value)
                                     .FirstOrDefault();
 
