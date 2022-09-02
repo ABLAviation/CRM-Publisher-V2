@@ -43,6 +43,7 @@ namespace CRM_Publisher_V2
             //string Publish_Flag = (string)((Range)ws.Application.get_Range("Publish_Flag")).Value2;
             bool Publish_Flag_Value = ws.Application.get_Range("Publish_Flag").Value2;
             string Publish_Flag = Publish_Flag_Value.ToString();
+            bool Incorrect_Pwd = false;
 
             if (Publish_Flag != null && Publish_Flag.ToUpper() == "TRUE")
             {
@@ -66,15 +67,31 @@ namespace CRM_Publisher_V2
                     string param8_fieldtype = "";
                     string param6_data = "";
                     string param7_rowid = "";
+                    //string ParamsVal = Params.Value2;
+                    Range URLRng = (Range)ws.Application.get_Range("CRM_URL");
+                    string param1_url = URLRng.Value2;
 
                     // In case user wants to cancel
                     if (string.IsNullOrEmpty(param2_username) || string.IsNullOrEmpty(param3_password))
                     {
-
+                        
                         goto End;
                     }
 
-                
+                    //Connecting Excel to D365
+                    string connectionstring_dynamic = "AuthType=OAuth;Username=" + param2_username + ";Password=" + param3_password + ";Url = " + param1_url + ";AppId=fb6c6ce9-b188-4517-a971-02fe33362a16;RedirectUri=https://crmpublisher-console;LoginPrompt=auto;";
+
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    var servicedynamic = new CrmServiceClient(connectionstring_dynamic);
+
+                    if (servicedynamic.IsReady.ToString() == "False")
+                    {
+                        MessageBox.Show("Incorret username or password. Please try again!");
+                        Incorrect_Pwd = true;
+                        goto End;
+                    }
+
+
                     //Range rng = (Range)ws.Application.get_Range("range");
                     Range Params = (Range)ws.Application.get_Range("CRMOutputData");
                     //string RecorID = (string)Params[1, 5];
@@ -188,9 +205,7 @@ namespace CRM_Publisher_V2
 
                     }
 
-                    //string ParamsVal = Params.Value2;
-                    Range URLRng = (Range)ws.Application.get_Range("CRM_URL");
-                    string param1_url = URLRng.Value2;
+                    
                     
                     String ParamList;
                     List<string> ParamListArray = new List<string>();
@@ -213,16 +228,7 @@ namespace CRM_Publisher_V2
                     string ParamsVal = String.Join("||", ParamListArray);
                     //ws.Range["O1"].Value = ParamsVal;
                     //MessageBox.Show(ParamsVal);
-                    //Connecting Excel to D365
-                    string connectionstring_dynamic = "AuthType=OAuth;Username=" + param2_username + ";Password=" + param3_password + ";Url = " + param1_url + ";AppId=fb6c6ce9-b188-4517-a971-02fe33362a16;RedirectUri=https://crmpublisher-console;LoginPrompt=auto;";
-
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                    var servicedynamic = new CrmServiceClient(connectionstring_dynamic);
-
-                    if (servicedynamic.IsReady.ToString() == "False")
-                    {
-                        goto End;
-                    }
+                    
 
                     WhoAmIRequest systemUserRequest = new WhoAmIRequest();
                     WhoAmIResponse systemUserResponse = (WhoAmIResponse)servicedynamic.Execute(systemUserRequest);
@@ -304,10 +310,7 @@ namespace CRM_Publisher_V2
                     {
                         MessageBox.Show("Operation Canceled !");
                     }
-                    else
-                    {
-                        MessageBox.Show("Please check your credentials !");
-                    }
+                    
                 }
 
                 catch (Exception ex)
