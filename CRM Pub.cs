@@ -38,7 +38,7 @@ namespace CRM_Publisher_V2
         {
             //Calling the "Parameters" and "Update CRM" sheets and necessary Ranges
             Worksheet ws = Globals.ThisAddIn.GetUpdCRMSheet();
-            Worksheet Paramsws = Globals.ThisAddIn.GetParamWorksheet();
+            
 
             //string Publish_Flag = (string)((Range)ws.Application.get_Range("Publish_Flag")).Value2;
             bool Publish_Flag_Value = ws.Application.get_Range("Publish_Flag").Value2;
@@ -78,6 +78,7 @@ namespace CRM_Publisher_V2
                         goto End;
                     }
 
+
                     //Connecting Excel to D365
                     string connectionstring_dynamic = "AuthType=OAuth;Username=" + param2_username + ";Password=" + param3_password + ";Url = " + param1_url + ";AppId=fb6c6ce9-b188-4517-a971-02fe33362a16;RedirectUri=https://crmpublisher-console;LoginPrompt=auto;";
 
@@ -89,6 +90,7 @@ namespace CRM_Publisher_V2
                         MessageBox.Show("Incorret username or password. Please try again!");
                         Incorrect_Pwd = true;
                         goto End;
+                        //sdsdsd
                     }
 
 

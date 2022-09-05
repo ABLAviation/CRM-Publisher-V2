@@ -23,10 +23,10 @@ namespace CRM_Publisher_V2
         {
             return (Excel.Worksheet)Application.Sheets["update CRM"];
         }
-        public Excel.Worksheet GetParamWorksheet()
+        /*public Excel.Worksheet GetParamWorksheet()
         {
             return (Excel.Worksheet)Application.Sheets["Parameters"];
-        }
+        }*/
         #region VSTO generated code
 
         /// <summary>
