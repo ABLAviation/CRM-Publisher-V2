@@ -140,7 +140,7 @@ namespace CRM_Publisher_V2
                             case "Life at Ext. 1 (%)":
                                 if (FieldValue.GetType().Name != "Double")
                                 {
-                                    MessageBox.Show("Please check \"" + Field + "\" Value !");
+                                    MessageBox.Show("Please check \"" + Field + "\" value !");
                                     //MessageBox.Show("1");
                                     goto End;
                                 }
@@ -154,22 +154,28 @@ namespace CRM_Publisher_V2
                             case "MR Balance at Ext. 1 ($)":
                                 if (FieldValue.GetType().Name != "Double")
                                 {
-                                    MessageBox.Show("Please check \"" + Field + "\" Value !");
+                                    MessageBox.Show("Please check \"" + Field + "\" value !");
                                     //MessageBox.Show("3");
 
                                     goto End;
                                     
+                                }
+                                else if (FieldValue < 0 )
+                                {
+                                    MessageBox.Show("The value of \"" + Field + "\" is out of range!");
+                                    //MessageBox.Show("2");
+                                    goto End;
                                 };
                                 break;
                             case "Enable on FF":
                                 if (FieldValue.GetType().Name != "String") 
                                 {
-                                    MessageBox.Show("Please check \"" + Field + "\" Value !");
+                                    MessageBox.Show("Please check \"" + Field + "\" value !");
                                     goto End;
                                 }
                                 else if ((FieldValue.ToUpper() != "NO" && FieldValue.ToUpper() != "YES") )
                                 {
-                                    MessageBox.Show("Please check \"" + Field + "\" Value !");
+                                    MessageBox.Show("Please check \"" + Field + "\" value !");
                                     //MessageBox.Show("4");
                                     goto End;
                                 };
@@ -177,7 +183,7 @@ namespace CRM_Publisher_V2
                             case "Internal Notes":
                                 if (FieldValue.GetType().Name != "String")
                                 {
-                                    MessageBox.Show("Please check \"" + Field + "\" Value !");
+                                    MessageBox.Show("Please check \"" + Field + "\" value !");
                                     //MessageBox.Show("5");
                                     goto End;
                                 };
@@ -193,7 +199,7 @@ namespace CRM_Publisher_V2
                             case "Engine Conclusions":
                                 if (FieldValue.GetType().Name != "String")
                                 {
-                                    MessageBox.Show("Please check \"" + Field + "\" Value !");
+                                    MessageBox.Show("Please check \"" + Field + "\" value !");
                                     //MessageBox.Show("7");
                                     goto End;
                                 };
