@@ -43,7 +43,7 @@ namespace CRM_Publisher_V2
             //string Publish_Flag = (string)((Range)ws.Application.get_Range("Publish_Flag")).Value2;
             bool Publish_Flag_Value = ws.Application.get_Range("Publish_Flag").Value2;
             string Publish_Flag = Publish_Flag_Value.ToString();
-            bool Incorrect_Pwd = false;
+            bool IsUpdated = true;
 
             if (Publish_Flag != null && Publish_Flag.ToUpper() == "TRUE")
             {
@@ -74,8 +74,8 @@ namespace CRM_Publisher_V2
                     // In case user wants to cancel
                     if (string.IsNullOrEmpty(param2_username) || string.IsNullOrEmpty(param3_password))
                     {
-                        
-                        goto End;
+                        MessageBox.Show("Operation Canceled !");
+                        return;
                     }
 
 
@@ -88,8 +88,7 @@ namespace CRM_Publisher_V2
                     if (servicedynamic.IsReady.ToString() == "False")
                     {
                         MessageBox.Show("Incorret username or password. Please try again!");
-                        Incorrect_Pwd = true;
-                        goto End;
+                        return;
                         //sdsdsd
                     }
 
@@ -141,67 +140,59 @@ namespace CRM_Publisher_V2
                                 if (FieldValue.GetType().Name != "Double")
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" value !");
-                                    //MessageBox.Show("1");
-                                    goto End;
+                                    return;
                                 }
                                 else if(FieldValue < 0 || FieldValue > 100)
                                 {
                                     MessageBox.Show("The value of \"" + Field + "\" is out of range!");
-                                    //MessageBox.Show("2");
-                                    goto End;
+                                    return;
                                 }
                                 break;
                             case "MR Balance at Ext. 1 ($)":
                                 if (FieldValue.GetType().Name != "Double")
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" value !");
-                                    //MessageBox.Show("3");
+                                    return;
 
-                                    goto End;
-                                    
                                 }
                                 else if (FieldValue < 0 )
                                 {
                                     MessageBox.Show("The value of \"" + Field + "\" is out of range!");
-                                    //MessageBox.Show("2");
-                                    goto End;
+                                    return;
                                 };
                                 break;
                             case "Enable on FF":
                                 if (FieldValue.GetType().Name != "String") 
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" value !");
-                                    goto End;
+
+                                    return;
                                 }
                                 else if ((FieldValue.ToUpper() != "NO" && FieldValue.ToUpper() != "YES") )
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" value !");
-                                    //MessageBox.Show("4");
-                                    goto End;
+                                    return;
                                 };
                                 break;
                             case "Internal Notes":
                                 if (FieldValue.GetType().Name != "String")
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" value !");
-                                    //MessageBox.Show("5");
-                                    goto End;
+                                    return;
                                 };
                                 break;
                             case "Conclusions":
                                 if (FieldValue.GetType().Name != "String")
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" Value !");
-                                    //MessageBox.Show("6");
-                                    goto End;
+                                    return;
                                 };
                                 break;
                             case "Engine Conclusions":
                                 if (FieldValue.GetType().Name != "String")
                                 {
                                     MessageBox.Show("Please check \"" + Field + "\" value !");
-                                    //MessageBox.Show("7");
-                                    goto End;
+                                    return;
                                 };
                                 break;
                             default:
@@ -313,11 +304,12 @@ namespace CRM_Publisher_V2
 
                     }
                     MessageBox.Show("Program Terminated!");
-                End:
+                /*End:
                     if (string.IsNullOrEmpty(param2_username) || string.IsNullOrEmpty(param3_password))
                     {
                         MessageBox.Show("Operation Canceled !");
-                    }
+                        Environment.Exit(0);
+                    }*/
                     
                 }
 
