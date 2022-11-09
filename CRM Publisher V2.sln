@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM Publisher V2", "CRM Pub
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CRM Pub Setup", "CRM Pub Setup\CRM Pub Setup.vdproj", "{BA921E87-706B-43D1-9BAE-9E2D7241173E}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup2", "..\Setup2\Setup2.vdproj", "{EAA49F8E-B5C4-40A1-BFDE-866969750D4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,8 @@ Global
 		{5D8C001F-E7E9-4822-BBE3-9F3E66B9465A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA921E87-706B-43D1-9BAE-9E2D7241173E}.Debug|Any CPU.ActiveCfg = Debug
 		{BA921E87-706B-43D1-9BAE-9E2D7241173E}.Release|Any CPU.ActiveCfg = Release
+		{EAA49F8E-B5C4-40A1-BFDE-866969750D4D}.Debug|Any CPU.ActiveCfg = Debug
+		{EAA49F8E-B5C4-40A1-BFDE-866969750D4D}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
